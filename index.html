@@ -866,8 +866,14 @@
                 <div class="col-lg-12">
                     <div class="contact-wrapper form-style-two pt-115">
                         <h4 class="contact-title pb-10"><i class="lni lni-envelope"></i> Leave <span>A Message.</span></h4>
+                         <div class="general-form">
+                        <style>
+                                  .display-none {
+                                    display: none;
+                                  }
+                                </style>
                         
-                        <form id="contact-form" action="assets/contact.php" method="post">
+                        <form id="contact-form" action="https://formspree.io/maypnyjv" name="A New Form" method="post">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-input mt-25">
@@ -882,7 +888,7 @@
                                     <div class="form-input mt-25">
                                         <label>Email</label>
                                         <div class="input-items default">
-                                            <input type="email" name="email" placeholder="Email">
+                                            <input type="email" name="_replyto" placeholder="Email">
                                             <i class="lni lni-envelope"></i>
                                         </div>
                                     </div> <!-- form input -->
@@ -896,7 +902,10 @@
                                         </div>
                                     </div> <!-- form input -->
                                 </div>
-                                <p class="form-message"></p>
+                                 <div id="message">
+                              <div class="alert alert-danger center-block submit-fail display-none">Please fill in all form fields<br><a href="#"><i class="fa fa-long-arrow-left fa-4x"></i></a></div>
+                              <div class="alert alert-success center-block submit-success display-none">Thanks for stopping to say Hello!<br><a href="#"><i class="fa fa-long-arrow-left fa-4x"></i></a></div>
+                            </div>
                                 <div class="col-md-12">
                                     <div class="form-input light-rounded-buttons mt-30">
                                         <button class="main-btn light-rounded-two">Send Message</button>
@@ -904,10 +913,12 @@
                                 </div>
                             </div> <!-- row -->
                         </form>
+                    </div>
                     </div> <!-- contact wrapper form -->
                 </div>
             </div> <!-- row -->
         </div> <!-- container -->
+
     </section>
 
     <!--====== CONTACT PART ENDS ======-->
@@ -994,6 +1005,35 @@
     <!--====== Main js ======-->
     <script src="assets/js/main.js"></script>
     
+    <script>
+     $(document).ready(function() {
+ 
+  var $contactForm = $('#contact-form');
+  $contactForm.submit(function(e) {
+    e.preventDefault();
+    $.ajax({
+      url: '//formspree.io/maypnyjv',
+      method: 'POST',
+      data: $(this).serialize(),
+      dataType: 'json',
+      
+      success: function(data) {
+         $('.submit-success').fadeToggle(400);
+         $('.submit-fail, .submit-success').click(function() {
+            $(this).hide();
+          });
+      },
+      error: function(err) {
+        $('.submit-fail').fadeToggle(400);
+        $('.submit-fail, .submit-success').click(function() {
+            $(this).hide();
+          });
+      }
+    });
+  });
+});
+
+   </script>
 </body>
 
 </html>
